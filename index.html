@@ -1,0 +1,801 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>In Case You Forget</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --wine: #501d2b;
+  --wine-dark: #2b101b;
+  --gold: #c6a36e;
+  --paper: #fffaf0;
+  --ink: #514139;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  color: #f7ead9;
+  font-family: "DM Sans", sans-serif;
+  background:
+    radial-gradient(ellipse at 50% 42%, #70404b 0%, #49212e 43%, transparent 75%),
+    linear-gradient(135deg, #211019, #351522 55%, #1d0d16);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .12;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 55px 20px 25px;
+  position: relative;
+}
+
+.top-label {
+  font-size: 9px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #d3b58a;
+  margin-bottom: 17px;
+}
+
+.main-title {
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  font-size: clamp(34px, 5vw, 52px);
+  text-align: center;
+  color: #f7ead9;
+}
+
+.subtitle {
+  margin-top: 12px;
+  margin-bottom: 48px;
+  color: #d4bca9;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 19px;
+  font-style: italic;
+}
+
+/* BOOK */
+
+.book-scene {
+  width: min(900px, 94vw);
+  perspective: 2400px;
+  position: relative;
+  filter: drop-shadow(0 35px 30px rgba(0,0,0,.38));
+}
+
+.book {
+  width: 100%;
+  aspect-ratio: 1.55 / 1;
+  min-height: 400px;
+  max-height: 590px;
+  position: relative;
+  display: flex;
+  transform-style: preserve-3d;
+  border-radius: 7px 13px 13px 7px;
+  background: #c9b18d;
+}
+
+/* Pages underneath the cover */
+
+.book::before {
+  content: "";
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  left: 7px;
+  right: -9px;
+  border-radius: 7px 13px 13px 7px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #f8efdF 0px,
+    #f8efdF 2px,
+    #d8c6a9 3px,
+    #fff8e9 4px
+  );
+  box-shadow: 8px 8px 0 #a88c68;
+}
+
+.book::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 22px;
+  z-index: 2;
+  background: linear-gradient(90deg, #26101a, #75404b, #32121e);
+  border-radius: 7px 0 0 7px;
+  opacity: .85;
+  pointer-events: none;
+}
+
+/* OPEN PAGES */
+
+.book-pages {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  padding: 12px;
+  overflow: hidden;
+  border-radius: 7px 13px 13px 7px;
+  background: #d9c5a5;
+  z-index: 1;
+}
+
+.paper {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  padding: clamp(27px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at center, rgba(255,255,255,.65), transparent 75%),
+    linear-gradient(100deg, #f3e9d7, #fffaf0 48%, #f2e6d2);
+  overflow: hidden;
+}
+
+.paper.left {
+  border-radius: 4px 0 0 4px;
+  box-shadow: inset -14px 0 20px -20px #4b3025;
+}
+
+.paper.right {
+  border-radius: 0 4px 4px 0;
+  box-shadow: inset 14px 0 20px -20px #4b3025;
+}
+
+.paper::before {
+  content: "";
+  position: absolute;
+  inset: 13px;
+  border: 1px solid rgba(173,140,99,.17);
+  pointer-events: none;
+}
+
+.paper-content {
+  position: relative;
+  z-index: 1;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(14px, 1.65vw, 19px);
+  line-height: 1.58;
+  letter-spacing: .05px;
+}
+
+.paper-content p {
+  margin-bottom: 15px;
+}
+
+.paper-content p:last-child {
+  margin-bottom: 0;
+}
+
+.salutation {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  font-style: italic;
+  color: #713c49;
+  margin-bottom: 22px !important;
+}
+
+.special-line {
+  font-family: "Playfair Display", serif;
+  font-size: 19px;
+  font-style: italic;
+  color: #713c49;
+  margin-top: 18px;
+}
+
+.page-number {
+  position: absolute;
+  bottom: 17px;
+  color: #a58b6d;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 13px;
+}
+
+.left .page-number { left: 30px; }
+.right .page-number { right: 30px; }
+
+.page-decoration {
+  position: absolute;
+  top: 17px;
+  color: #b99a6b;
+  font-size: 13px;
+}
+
+.left .page-decoration { left: 30px; }
+.right .page-decoration { right: 30px; }
+
+/* CENTER SPINE */
+
+.spine-shadow {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 50%;
+  width: 25px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    90deg,
+    rgba(80,52,36,.17),
+    rgba(255,255,255,.3),
+    rgba(80,52,36,.17)
+  );
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* COVER */
+
+.cover {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 1.4s cubic-bezier(.72,0,.2,1);
+  cursor: pointer;
+}
+
+.book.open .cover {
+  transform: rotateY(-165deg);
+  pointer-events: none;
+}
+
+.cover-front,
+.cover-inside {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 7px 13px 13px 7px;
+}
+
+.cover-front {
+  border: 3px solid #9d7952;
+  background:
+    linear-gradient(120deg, rgba(255,255,255,.1), transparent 40%),
+    linear-gradient(145deg, #783f4c, #501d2b 52%, #35131f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 0 5px rgba(30,9,17,.2),
+    inset 0 0 35px rgba(0,0,0,.22);
+}
+
+.cover-front::before {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border: 1px solid rgba(221,186,131,.75);
+  border-radius: 3px;
+}
+
+.cover-front::after {
+  content: "";
+  position: absolute;
+  inset: 27px;
+  border: 1px solid rgba(221,186,131,.28);
+}
+
+.cover-inside {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #4a1b29, #2c101b);
+  border: 3px solid #9d7952;
+}
+
+.cover-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cover-kicker {
+  font-size: 9px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: #dfc49a;
+  margin-bottom: 20px;
+}
+
+.cover-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(36px, 5vw, 57px);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.15;
+  color: #fff1df;
+}
+
+.cover-divider {
+  width: 65px;
+  height: 1px;
+  background: #c6a36e;
+  margin: 22px 0;
+}
+
+.cover-photo {
+  width: 110px;
+  height: 130px;
+  object-fit: cover;
+  border: 5px solid #f4e8d5;
+  box-shadow: 0 9px 20px rgba(0,0,0,.35);
+  transform: rotate(-3deg);
+}
+
+.cover-caption {
+  font-family: "Cormorant Garamond", serif;
+  color: #e3c9a9;
+  font-style: italic;
+  font-size: 17px;
+  margin-top: 17px;
+}
+
+/* CONTROLS */
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 23px;
+  margin-top: 30px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .5s;
+}
+
+.book.open ~ .controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-button {
+  padding: 11px 24px;
+  border: 1px solid rgba(211,177,122,.7);
+  background: rgba(255,255,255,.04);
+  color: #f0dfc7;
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.nav-button:hover:not(:disabled) {
+  background: #c6a36e;
+  color: #2b101b;
+}
+
+.nav-button:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.counter {
+  min-width: 70px;
+  text-align: center;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 17px;
+  color: #e1c69f;
+}
+
+.hint {
+  margin-top: 19px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #d5b99b;
+  text-align: center;
+  transition: opacity .4s;
+}
+
+.book.open ~ .hint {
+  opacity: .7;
+}
+
+/* FOOTER */
+
+.footer {
+  margin-top: 64px;
+  color: #d8bd9b;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 16px;
+  font-style: italic;
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+
+.footer::before {
+  content: "✦";
+  display: block;
+  color: #c6a36e;
+  font-size: 12px;
+  margin-bottom: 11px;
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+  .wrapper {
+    padding: 45px 12px 25px;
+  }
+
+  .subtitle {
+    margin-bottom: 32px;
+  }
+
+  .book {
+    aspect-ratio: .86 / 1;
+    min-height: 530px;
+  }
+
+  .book-pages {
+    padding: 7px;
+  }
+
+  .paper {
+    padding: 23px 14px;
+  }
+
+  .paper-content {
+    font-size: 12px;
+    line-height: 1.52;
+  }
+
+  .paper-content p {
+    margin-bottom: 11px;
+  }
+
+  .salutation {
+    font-size: 18px;
+    margin-bottom: 14px !important;
+  }
+
+  .special-line {
+    font-size: 15px;
+  }
+
+  .page-decoration {
+    top: 9px;
+    font-size: 10px;
+  }
+
+  .left .page-decoration { left: 15px; }
+  .right .page-decoration { right: 15px; }
+
+  .page-number {
+    bottom: 9px;
+    font-size: 10px;
+  }
+
+  .left .page-number { left: 15px; }
+  .right .page-number { right: 15px; }
+
+  .cover-photo {
+    width: 83px;
+    height: 100px;
+  }
+
+  .cover-title {
+    font-size: 34px;
+  }
+
+  .cover-kicker {
+    font-size: 8px;
+    letter-spacing: 3px;
+  }
+
+  .cover-caption {
+    font-size: 14px;
+  }
+
+  .controls {
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .nav-button {
+    padding: 10px 14px;
+    font-size: 9px;
+  }
+
+  .footer {
+    margin-top: 48px;
+  }
+}
+
+@media (max-width: 390px) {
+  .book {
+    min-height: 500px;
+  }
+
+  .paper {
+    padding: 19px 10px;
+  }
+
+  .paper-content {
+    font-size: 10.5px;
+    line-height: 1.5;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="wrapper">
+
+  <p class="top-label">a note for dieraa</p>
+  <h1 class="main-title">In Case You Forget.</h1>
+  <p class="subtitle">words worth keeping, whenever you need them.</p>
+
+  <div class="book-scene">
+
+    <div class="book" id="book">
+
+      <div class="book-pages">
+
+        <section class="paper left" id="leftPage">
+          <span class="page-decoration">✧</span>
+          <div class="paper-content" id="leftContent"></div>
+          <span class="page-number" id="leftNumber"></span>
+        </section>
+
+        <section class="paper right" id="rightPage">
+          <span class="page-decoration">✧</span>
+          <div class="paper-content" id="rightContent"></div>
+          <span class="page-number" id="rightNumber"></span>
+        </section>
+
+        <div class="spine-shadow"></div>
+
+      </div>
+
+      <div class="cover" id="cover">
+        <div class="cover-front">
+          <div class="cover-content">
+            <p class="cover-kicker">a letter for you</p>
+            <h2 class="cover-title">In Case<br>You Forget.</h2>
+            <div class="cover-divider"></div>
+            <img src="foto sembilan.jpeg" alt="Dieraa" class="cover-photo">
+            <p class="cover-caption">for the pages yet to come</p>
+          </div>
+        </div>
+        <div class="cover-inside"></div>
+      </div>
+
+    </div>
+
+    <div class="controls">
+      <button class="nav-button" id="prevBtn" onclick="changePage(-1)" disabled>
+        BACK
+      </button>
+
+      <span class="counter" id="counter">01 / 05</span>
+
+      <button class="nav-button" id="nextBtn" onclick="changePage(1)">
+        NEXT
+      </button>
+    </div>
+
+    <p class="hint" id="hint">CLICK THE COVER TO OPEN</p>
+
+  </div>
+
+  <footer class="footer">made by ansel for dieraa</footer>
+
+</main>
+
+<script>
+const spreads = [
+
+  {
+    left: `
+      <p class="salutation">dear dieraa,</p>
+
+      <p>pernah nggak sih kamu berpikir kalau ada banyak hal kecil yang sebenarnya menarik untuk dibicarakan, tapi sering kali terlewat begitu saja? mulai dari pertanyaan random, opini yang nggak diminta, sampai cerita yang tiba-tiba muncul tanpa alasan.</p>
+    `,
+    right: `
+      <p>mas rasa, salah satu hal menarik dari mengenal seseorang adalah menemukan betapa banyak hal yang belum kita ketahui tentangnya. selalu ada topik baru, sudut pandang berbeda, atau hal sederhana yang ternyata bisa jadi bahan obrolan panjang.</p>
+
+      <p>dari percakapan-percakapan kecil seperti itu, perlahan kita bisa menemukan lebih banyak hal tentang seseorang, bahkan hal-hal yang sebelumnya nggak pernah terpikirkan untuk ditanyakan.</p>
+    `
+  },
+
+  {
+    left: `
+      <p>dan mungkin, itu juga yang membuat mas masih ingin terus mengenal kamu. bukan cuma tentang hal-hal yang sudah pernah kamu ceritakan, tapi juga tentang hal-hal yang belum sempat kamu bagikan. tentang apa yang kamu suka, cerita random yang tiba-tiba ingin kamu sampaikan, kebiasaan kecilmu, sampai sisi-sisi dirimu yang mungkin belum banyak orang tahu.</p>
+    `,
+    right: `
+      <p>jadi, kalau suatu saat kamu kehabisan bahan cerita, mas punya sedikit pengingat: kita nggak harus selalu membicarakan sesuatu yang penting. sometimes, random conversations are the best ones.</p>
+
+      <p>nggak perlu selalu punya topik menarik untuk memulai percakapan, karena terkadang hal paling sederhana justru bisa menjadi cerita yang menyenangkan.</p>
+    `
+  },
+
+  {
+    left: `
+      <p>oh iya, jangan lupa untuk sesekali melakukan hal-hal yang kamu sukai. menikmati lagu favorit, membaca sesuatu yang menarik, menonton film yang sudah lama masuk watchlist, atau sekadar menghabiskan waktu dengan kegiatan yang bikin harimu lebih menyenangkan.</p>
+
+      <p>sometimes, it's the little things that make an ordinary day feel a little better.</p>
+    `,
+    right: `
+      <p>mas juga punya satu harapan kecil. mas nggak tahu akan ada berapa banyak cerita yang nantinya kita punya, tapi semoga masih ada banyak halaman yang bisa kita isi bersama.</p>
+
+      <p>semoga karakter kita punya banyak cerita menarik untuk dimainkan, banyak percakapan yang nggak terduga, dan banyak momen seru yang bisa menjadi bagian dari kisah ini.</p>
+    `
+  },
+
+  {
+    left: `
+      <p class="special-line">no need to make everything perfect, let's just make it meaningful.</p>
+
+      <p>karena pada akhirnya, sebuah cerita nggak harus selalu punya alur yang sempurna. sometimes, the unexpected parts make it more interesting.</p>
+
+      <p>dan mungkin, justru bagian-bagian sederhana yang nggak pernah direncanakan itulah yang nantinya membuat cerita ini terasa lebih berwarna.</p>
+    `,
+    right: `
+      <p>jadi, kalau suatu hari kamu membaca surat ini lagi, anggap saja ini sebagai pengingat kecil dariku. bahwa kamu nggak harus menjadi siapa-siapa selain dirimu sendiri.</p>
+
+      <p>tetaplah menjadi dieraa dengan segala hal kecil yang membentuk dirimu, karena masih ada banyak hal tentang kamu yang ingin mas ketahui.</p>
+    `
+  },
+
+  {
+    left: `
+      <p>so, keep this little letter somewhere. bukan karena isinya sesuatu yang luar biasa, tapi karena mas ingin memberikan satu halaman kecil yang bisa kamu temukan kapan saja.</p>
+    `,
+    right: `
+      <p>see you in our next little chapter, dieraa.</p>
+
+      <p class="special-line">with love,<br>ansel</p>
+    `
+  }
+
+];
+
+let currentSpread = 0;
+let isOpened = false;
+let isAnimating = false;
+
+const book = document.getElementById("book");
+const cover = document.getElementById("cover");
+
+const leftContent = document.getElementById("leftContent");
+const rightContent = document.getElementById("rightContent");
+
+const leftNumber = document.getElementById("leftNumber");
+const rightNumber = document.getElementById("rightNumber");
+
+const counter = document.getElementById("counter");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+function renderSpread() {
+  const spread = spreads[currentSpread];
+
+  leftContent.innerHTML = spread.left;
+  rightContent.innerHTML = spread.right;
+
+  const firstNumber = currentSpread * 2 + 1;
+  const secondNumber = firstNumber + 1;
+
+  leftNumber.textContent = String(firstNumber).padStart(2, "0");
+  rightNumber.textContent = String(secondNumber).padStart(2, "0");
+
+  counter.textContent =
+    String(currentSpread + 1).padStart(2, "0") +
+    " / " +
+    String(spreads.length).padStart(2, "0");
+
+  prevBtn.disabled = currentSpread === 0;
+  nextBtn.disabled = currentSpread === spreads.length - 1;
+}
+
+function openBook() {
+  if (isOpened) return;
+
+  isOpened = true;
+  book.classList.add("open");
+  document.getElementById("hint").textContent =
+    "CLICK THE RIGHT PAGE TO CONTINUE";
+
+  renderSpread();
+}
+
+cover.addEventListener("click", openBook);
+
+// Click the right page to continue
+document.getElementById("rightPage").addEventListener("click", () => {
+  if (isOpened) changePage(1);
+});
+
+// Click the left page to go back
+document.getElementById("leftPage").addEventListener("click", () => {
+  if (isOpened) changePage(-1);
+});
+
+function changePage(direction) {
+  if (!isOpened || isAnimating) return;
+
+  const next = currentSpread + direction;
+
+  if (next < 0 || next >= spreads.length) return;
+
+  isAnimating = true;
+
+  const activePage = direction === 1
+    ? document.getElementById("rightPage")
+    : document.getElementById("leftPage");
+
+  activePage.style.transition = "transform .42s ease, opacity .42s ease";
+  activePage.style.transformOrigin =
+    direction === 1 ? "left center" : "right center";
+
+  activePage.style.transform =
+    direction === 1 ? "rotateY(-12deg)" : "rotateY(12deg)";
+
+  activePage.style.opacity = ".65";
+
+  setTimeout(() => {
+    currentSpread = next;
+    renderSpread();
+
+    activePage.style.transform = "rotateY(0deg)";
+    activePage.style.opacity = "1";
+
+    setTimeout(() => {
+      activePage.style.transition = "";
+      isAnimating = false;
+    }, 430);
+
+  }, 400);
+}
+
+// Keyboard navigation
+document.addEventListener("keydown", (event) => {
+  if (!isOpened) {
+    if (event.key === "Enter") openBook();
+    return;
+  }
+
+  if (event.key === "ArrowRight") changePage(1);
+  if (event.key === "ArrowLeft") changePage(-1);
+});
+
+renderSpread();
+</script>
+
+</body>
+</html>
